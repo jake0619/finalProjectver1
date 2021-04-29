@@ -3,34 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:padding="10dp"
-    app:cardBackgroundColor="@color/teal_200"
-    app:cardCornerRadius="15dp"
+    android:padding="15dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
     android:layout_margin="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:id="@+id/imgView"
+            android:src="@drawable/ic_baseline_photo_24"/>
         <TextView
             android:id="@+id/textTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/white"
-            android:textSize="20sp"
+            android:paddingLeft="5dp"
+            android:textColor="@color/black"
+            android:textSize="8sp"
             android:textStyle="bold"
-            android:text="January"/>
+            android:text="January"
+            android:layout_toRightOf="@+id/imgView"/>
 
         <TextView
+            android:id="@+id/textDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
             android:text="some gpu"
-            android:textColor="@color/white"
-            android:textSize="13dp"
-            android:id="@+id/textDesc"
-            android:layout_below="@+id/textTitle"
-            android:layout_centerHorizontal="true"/>
+            android:textColor="@color/black"
+            android:textSize="5dp"
+            android:layout_marginRight="5dp"
+            />
     </RelativeLayout>
 
 

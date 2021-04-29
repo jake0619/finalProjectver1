@@ -2,15 +2,17 @@ package com.example.finalproject;
 
 public class Product {
     private String pName;
-    private double pPrice;
+    private String pPrice;
     private String pDesc;
     private boolean pAvail;
+    private String imageLink;
 
-    public Product(String pName, double pPrice, String pDesc, boolean pAvail) {
+    public Product(String pName, String pPrice, String pDesc, boolean pAvail, String imageLink) {
         this.pName = pName;
         this.pPrice = pPrice;
         this.pDesc = pDesc;
         this.pAvail = pAvail;
+        this.imageLink = imageLink;
     }
 
     public String getpName() {
@@ -21,11 +23,11 @@ public class Product {
         this.pName = pName;
     }
 
-    public double getpPrice() {
+    public String getpPrice() {
         return pPrice;
     }
 
-    public void setpPrice(Float pPrice) {
+    public void setpPrice(String pPrice) {
         this.pPrice = pPrice;
     }
 
@@ -43,5 +45,9 @@ public class Product {
 
     public void setpAvail(boolean pAvail) {
         this.pAvail = pAvail;
+    }
+
+    public String getImageLink(){
+        return imageLink;
     }
 }

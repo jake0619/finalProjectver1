@@ -6,10 +6,35 @@
     tools:context=".fragment_feed"
     android:padding="8dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <androidx.recyclerview.widget.RecyclerView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rView" />
+        android:layout_height="match_parent">
+        <EditText
+            android:id="@+id/searchText"
+            android:layout_width="330dp"
+            android:layout_height="45dp"
+            android:hint="Search here"
+            android:textColor="@color/black"/>
+        <ImageButton
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_search_24"
+            android:layout_toRightOf="@+id/searchText"
+
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rView"
+            android:layout_below="@+id/searchText"
+            />
+
+
+    </RelativeLayout>
+
+
+
 
 </FrameLayout>

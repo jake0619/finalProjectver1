@@ -1,27 +1,41 @@
 package com.example.finalproject;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static androidx.core.content.ContextCompat.getSystemService;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link fragment_feed#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_feed extends Fragment {
+public class fragment_feed extends Fragment implements View.OnClickListener {
+
+    private static final String LOG_TAG =
+            fragment_feed.class.getSimpleName();
 
     RecyclerView recyclerView;
     RecyclerAdapter recyclerAdapter;
     ArrayList<Product> pData;
+    ImageButton searchButton;
+    EditText searchInput;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,22 +83,57 @@ public class fragment_feed extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
+        searchButton = (ImageButton) view.findViewById(R.id.searchButton);
+        searchInput = view.findViewById(R.id.searchText);
+        searchButton.setOnClickListener(this);
         recyclerView = view.findViewById(R.id.rView);
         recyclerView.setHasFixedSize(true);
         pData = new ArrayList<>();
+        pData.add(new Product("Loading", "", "", false, ""));
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerAdapter = new RecyclerAdapter(pData, view.getContext());
         recyclerView.setAdapter(recyclerAdapter);
         initializeData();
-        recyclerAdapter.notifyDataSetChanged();
         return view;
     }
 
     public void initializeData(){
         /* TODO: fetch data from database and populate recycler view with initial data from database */
-        String[] tempNames = {"GeForce RTX 3080", "Radeon 6800 XT", "GeForce RTX 3060"};
-        for(int i = 0; i<3; i++){
-            pData.add(new Product(tempNames[i], 300+i, "Some GPU", true));
+        FetchBook fetchBook = new FetchBook(this);
+        fetchBook.execute("best graphic cards");
+
+    }
+
+    public void updateData(ArrayList<Product> products) {
+        this.pData = products;
+        Log.d(LOG_TAG, "Size: "+pData.size());
+        recyclerAdapter.setData(pData);
+        recyclerAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClick(View v) {
+        try {
+            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+            // TODO: handle exception
         }
+
+        if(searchInput.getText().toString().trim().length() == 0){
+            Toast.makeText(this.getActivity(), "Please enter a search query", Toast.LENGTH_SHORT).show();
+        }
+        else{
+
+            String searchQuery = searchInput.getText().toString();
+            FetchBook fetchBook = new FetchBook(this);
+            fetchBook.execute(searchQuery);
+            ArrayList<Product> temp = new ArrayList<Product>();
+            temp.add(new Product("Loading", "", "", false, ""));
+            recyclerAdapter.setData(temp);
+            recyclerAdapter.notifyDataSetChanged();
+
+        }
+
     }
 }
